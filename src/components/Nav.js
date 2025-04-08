@@ -1,21 +1,24 @@
-import React from "react";
-import littlelemon_logo from "../images/littlelemon_logo.png"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Nav.css';
 
 const Nav = () => {
-    return(
-        <nav>
-            <img src={littlelemon_logo} alt="Little Lemon Logo" ></img>
-            <ul>
-                <li><a>Home</a></li>
-                <li><a>About</a></li>
-                <li><a>Menu</a></li>
-                <li><a>Reservations</a></li>
-                <li><a>Order Online</a></li>
-                <li><a>Login</a></li>
-
-            </ul>
-        </nav>
-    )
-}
+  return (
+    <nav>
+      <div className="nav-wrapper">
+        <div className="logo">
+          <Link to="/">Little Lemon</Link>
+        </div>
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/menu">Menu</Link></li>
+          <li><Link to="/reservations">Reservations</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
 export default Nav;
