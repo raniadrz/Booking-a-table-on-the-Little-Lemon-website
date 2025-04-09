@@ -22,20 +22,7 @@ const Reservations = () => {
     { id: 7, name: 'John Doe', date: '2024-03-25', time: '18:00', guests: 4, occasion: 'Birthday', type: 'birthday' },
     { id: 8, name: 'Jane Smith', date: '2024-03-25', time: '19:30', guests: 2, occasion: 'Anniversary', type: 'anniversary' },
     { id: 9, name: 'Mike Johnson', date: '2024-03-26', time: '20:00', guests: 6, occasion: 'Business', type: 'business' },
-    { id: 10, name: 'Sarah Williams', date: '2024-03-27', time: '17:30', guests: 3, occasion: 'Birthday', type: 'birthday' }, 
-    { id: 11, name: 'John Doe', date: '2024-03-28', time: '18:00', guests: 4, occasion: 'Birthday', type: 'birthday' },
-    { id: 12, name: 'Jane Smith', date: '2024-03-28', time: '19:30', guests: 2, occasion: 'Anniversary', type: 'anniversary' },
-    { id: 13, name: 'Mike Johnson', date: '2024-03-29', time: '20:00', guests: 6, occasion: 'Business', type: 'business' },
-    { id: 14, name: 'Sarah Williams', date: '2024-03-30', time: '17:30', guests: 3, occasion: 'Birthday', type: 'birthday' }, 
-    { id: 15, name: 'John Doe', date: '2024-03-31', time: '18:00', guests: 4, occasion: 'Birthday', type: 'birthday' },
-    { id: 16, name: 'Jane Smith', date: '2024-03-31', time: '19:30', guests: 2, occasion: 'Anniversary', type: 'anniversary' },
-    { id: 17, name: 'Mike Johnson', date: '2024-04-01', time: '20:00', guests: 6, occasion: 'Business', type: 'business' },
-    { id: 18, name: 'Sarah Williams', date: '2024-04-02', time: '17:30', guests: 3, occasion: 'Birthday', type: 'birthday' },
-    { id: 19, name: 'John Doe', date: '2024-04-03', time: '18:00', guests: 4, occasion: 'Birthday', type: 'birthday' },
-    { id: 20, name: 'Jane Smith', date: '2024-04-03', time: '19:30', guests: 2, occasion: 'Anniversary', type: 'anniversary' },
-    { id: 21, name: 'Mike Johnson', date: '2024-04-04', time: '20:00', guests: 6, occasion: 'Business', type: 'business' },
-    { id: 22, name: 'Sarah Williams', date: '2024-04-05', time: '17:30', guests: 3, occasion: 'Birthday', type: 'birthday' },
-    { id: 23, name: 'John Doe', date: '2024-04-06', time: '18:00', guests: 4, occasion: 'Birthday', type: 'birthday' },
+    { id: 10, name: 'Sarah Williams', date: '2024-03-30', time: '17:30', guests: 3, occasion: 'Birthday', type: 'birthday' }, 
     
   ];
 
