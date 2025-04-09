@@ -6,6 +6,7 @@ import Header from "./Header";
 import About from "./About";
 import Menu from "./Menu";
 import BookingForm from "./BookingForm";
+import Reservations from "./Reservations";
 import Login from "./Login";
 
 const Main = () => {
@@ -59,7 +60,8 @@ const Main = () => {
                 <Route path="/confirmed" element={<ConfirmedBooking/> } />
                 <Route path="/about" element={<About />} />
                 <Route path="/menu" element={<Menu />} />
-                <Route path="/reservations" element={<BookingForm />} />
+                <Route path="/booking" element={<BookingForm />} />
+                <Route path="/reservations" element={<Reservations/>} />
                 <Route path="/login" element={<Login />} />
             </Routes>
         </main>

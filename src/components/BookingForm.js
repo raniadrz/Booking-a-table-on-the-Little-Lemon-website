@@ -1,96 +1,172 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./BookingForm.css";
 
-const BookingForm = (props) => {
-  const [occasion, setOccasion] = useState("");
-  const [guests, setGuests] = useState("");
-  const [date, setDate] = useState("");
-  const [times, setTimes] = useState("");
+const BookingForm = ({ availableTimes, dispatch, submitForm, initialDate }) => {
+  const [formData, setFormData] = useState({
+    date: initialDate || "",
+    time: "",
+    guests: "",
+    occasion: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (initialDate) {
+      setFormData(prev => ({
+        ...prev,
+        date: initialDate
+      }));
+      dispatch(initialDate);
+    }
+  }, [initialDate, dispatch]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Date validation
+    if (!formData.date) {
+      newErrors.date = "Date is required";
+    } else {
+      const selectedDate = new Date(formData.date);
+      const today = new Date();
+      if (selectedDate < today) {
+        newErrors.date = "Date cannot be in the past";
+      }
+    }
+
+    // Time validation
+    if (!formData.time) {
+      newErrors.time = "Time is required";
+    }
+
+    // Guests validation
+    if (!formData.guests) {
+      newErrors.guests = "Number of guests is required";
+    } else if (formData.guests < 1 || formData.guests > 10) {
+      newErrors.guests = "Number of guests must be between 1 and 10";
+    }
+
+    // Occasion validation
+    if (!formData.occasion) {
+      newErrors.occasion = "Occasion is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (name === "date") {
+      dispatch(value);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.submitForm(e);
-  };
-
-  const handleChange = (e) => {
-    setDate(e);
-    props.dispatch(e);
+    if (validateForm()) {
+      submitForm(formData);
+    }
   };
 
   return (
-    <div className="booking-container">
+    <section className="booking-form" aria-label="Reservation Form">
       <div className="form-section">
-        <h1>BOOKING</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="book-date">Date*</label>
-              <input
-                id="book-date"
-                value={date}
-                onChange={(e) => handleChange(e.target.value)}
-                type="date"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="book-time">Time*</label>
-              <select
-                id="book-time"
-                value={times}
-                onChange={(e) => setTimes(e.target.value)}
-                required
-              >
-                <option value="">18:00</option>
-                {props.availableTimes.availableTimes.map((availableTime) => (
-                  <option key={availableTime}>{availableTime}</option>
-                ))}
-              </select>
-            </div>
+        <h1>Reserve a Table</h1>
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="form-group">
+            <label htmlFor="res-date">Choose date*</label>
+            <input
+              type="date"
+              id="res-date"
+              name="date"
+              value={formData.date}
+              onChange={handleInputChange}
+              required
+              aria-required="true"
+              aria-invalid={!!errors.date}
+            />
+            {errors.date && <span className="error-message">{errors.date}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="book-guests">People*</label>
+            <label htmlFor="res-time">Choose time*</label>
             <select
-              id="book-guests"
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
+              id="res-time"
+              name="time"
+              value={formData.time}
+              onChange={handleInputChange}
               required
+              aria-required="true"
+              aria-invalid={!!errors.time}
             >
-              <option value="">4 persons</option>
-              <option value="1">1 person</option>
-              <option value="2">2 persons</option>
-              <option value="3">3 persons</option>
-              <option value="4">4 persons</option>
-              <option value="5">5 persons</option>
-              <option value="6">6 persons</option>
+              <option value="">Select a Time</option>
+              {availableTimes.availableTimes.map(time => (
+                <option key={time}>{time}</option>
+              ))}
             </select>
+            {errors.time && <span className="error-message">{errors.time}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="book-occasion">Occasion*</label>
-            <select
-              id="book-occasion"
-              value={occasion}
-              onChange={(e) => setOccasion(e.target.value)}
+            <label htmlFor="guests">Number of guests*</label>
+            <input
+              type="number"
+              placeholder="1"
+              min="1"
+              max="10"
+              id="guests"
+              name="guests"
+              value={formData.guests}
+              onChange={handleInputChange}
               required
+              aria-required="true"
+              aria-invalid={!!errors.guests}
+            />
+            {errors.guests && <span className="error-message">{errors.guests}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="occasion">Occasion*</label>
+            <select
+              id="occasion"
+              name="occasion"
+              value={formData.occasion}
+              onChange={handleInputChange}
+              required
+              aria-required="true"
+              aria-invalid={!!errors.occasion}
             >
               <option value="">Select an Option</option>
-              <option>Birthday</option>
-              <option>Anniversary</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Anniversary">Anniversary</option>
+              <option value="Business">Business</option>
             </select>
+            {errors.occasion && <span className="error-message">{errors.occasion}</span>}
           </div>
 
-          <button type="submit" className="submit-button">
-            Book a table
+          <button 
+            type="submit" 
+            className="submit-button"
+            aria-label="On Click"
+          >
+            Make Your Reservation
           </button>
         </form>
       </div>
       <div className="booking-image">
-        <img src="https://sharpmagazine.com/wp-content/uploads/2023/02/le-plongeoir-1.jpg" alt="Delicious" />
+        <img 
+          src="https://sharpmagazine.com/wp-content/uploads/2023/02/le-plongeoir-1.jpg" 
+          alt="Restaurant interior" 
+        />
       </div>
-    </div>
+    </section>
   );
 };
 
